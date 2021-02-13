@@ -1,7 +1,7 @@
-import env from 'dotenv' 
+import env from 'dotenv'
 
 const config = (() => {
-    env.config()
+  env.config()
 })()
 
 export default config
