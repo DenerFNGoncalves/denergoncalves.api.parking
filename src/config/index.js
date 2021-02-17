@@ -27,12 +27,13 @@ class Server {
   }
 
   start() {
-    this.closable = this._app.listen(config.server.port, () => {
+    this._app.listen(config.server.port, () => {
       console.log("server running")
     })
   }
-  close() {
-    this.closable.close()
+
+  get() {
+    return this._app
   }
 }
 

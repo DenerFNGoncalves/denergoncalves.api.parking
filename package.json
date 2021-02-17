@@ -7,10 +7,10 @@
     "db-create": "sequelize-cli db:create",
     "db-migration": "sequelize-cli db:migrate",
     "start": "node ./dist/index.js",
-    "dev": "eslint --fix ./src/ | nodemon --exec sucrase-node ./src/index.js",
-    "build": "sucrase ./src -d ./dist --transforms imports ",
+    "dev": "cp .env.dev .env && nodemon --exec sucrase-node ./src/index.js",
+    "build": "eslint --fix ./src/ && sucrase ./src -d ./dist --transforms imports ",
     "lint": "eslint --fix ./src/",
-    "test": "mocha --require sucrase/register --timeout 10000"
+    "test": "cp .env.test .env && mocha --require sucrase/register --timeout 10000"
   },
   "repository": {
     "type": "git",

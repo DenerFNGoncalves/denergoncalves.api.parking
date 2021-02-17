@@ -1,57 +1,76 @@
-process.env.NODE_ENV = 'test'
-
 import App from "../src/app"
 import Server from "../src/config"
 
 import Chai from 'chai'
 import ChaiHttp from 'chai-http'
-import CustomError from "../src/app/utils/custom-error"
+import ParkingSpot from "../src/app/models/parking-spot"
 
-const runTests = (() => {
-  const server = App.use(new Server())
-  server.start()
-  let should = Chai.should()
+Chai.should()
+Chai.use(ChaiHttp)
 
-  Chai.use(ChaiHttp)
-  describe('parking', () => {
-    beforeEach((done) => {
+class ParkingTests {
+  constructor() {
+    // creating server
+    this.server = new Server()
+    App.use(this.server).start()
 
-      done()
+    before(this.destroyData)
+  }
+
+  destroyData(done) {
+    ParkingSpot.destroy({
+      where: {},
+      truncate: true
     })
-  })
+      .then(() => done())
+      .catch(() => done())
+  }
 
-  describe('/POST parking', () => {
-   
-    it('it should RESULT on parking spot', (done) => {
-      Chai.request(server._app)
-        .post('/api/parking')
-        .send({ plate: 'AAA-9342' })
-        .end((err, res) => {
+  run() {
+    this.testPost(this.server.get())
+  }
 
-          const body = res.body
-          res.should.have.status(201)
+  testPost(server) {
+    describe('/POST parking', () => {
+      it('it should RESULT on parking spot', (done) => {
+        Chai.request(server)
+          .post('/api/parking')
+          .send({ plate: 'AAA-9342' })
+          .end((err, res) => {
 
-          body.should.include.keys(['success', 'spot'])
-          body.success.should.be.equal(true, "Message should result in success")
-          body.spot.should.be.above(0, "Spot should be greater than 0")
+            const body = res.body
+            res.should.have.status(201)
 
-          done()
-        })
-    })
-  })
-
-  it('it should DENY REQUEST on parking spot', (done) => {
-    Chai.request(server._app)
-      .post('/api/parking')
-      .send({ plate: 'A32A-9342' })
-      .end((err, res) => {
-        res.should.have.status(400)
-        res.body.should.include.keys(['errors'])
-        done()
+            body.should.include.keys(['success', 'spot'])
+            body.success.should.be.equal(true, "Message should result in success")
+            body.spot.should.be.above(0, "Spot should be greater than 0")
+            done()
+          })
       })
-  })
-  
-})
 
+      it('It should deny request using wrong mask on plate value', (done) => {
+        Chai.request(server)
+          .post('/api/parking')
+          .send({ plate: 'A32A-9342' })
+          .end((err, res) => {
+            res.should.have.status(400)
+            res.body.should.include.keys(['errors'])
+            done()
+          })
+      })
 
-runTests()
+      it('It should deny request no plate value sent', (done) => {
+        Chai.request(server)
+          .post('/api/parking')
+          .send({})
+          .end((err, res) => {
+            res.should.have.status(400)
+            res.body.should.include.keys(['errors'])
+            done()
+          })
+      })
+    })
+  }
+}
+
+new ParkingTests().run()
