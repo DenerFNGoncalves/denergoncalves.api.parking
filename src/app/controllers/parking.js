@@ -4,9 +4,10 @@ class ParkingController {
 
   async insert({ data }) {
     //TODO
-    console.log(data)
-    return { msg: "done" }
+    return { success: true, spot: 5 }
   }
+
+
 }
 
 export default {
