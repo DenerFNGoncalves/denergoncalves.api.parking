@@ -1,7 +1,11 @@
 import env from 'dotenv'
+env.config()
 
-const config = (() => {
-  env.config()
-})()
+import db from './dbconfig'
 
-export default config
+export default {
+  server: {
+    port: process.env.PORT
+  },
+  db: db[process.env.NODE_ENV]
+}

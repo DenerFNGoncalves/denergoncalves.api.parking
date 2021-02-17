@@ -4,11 +4,13 @@
   "description": "",
   "main": "./src/index.js",
   "scripts": {
+    "db-create": "sequelize-cli db:create",
+    "db-migration": "sequelize-cli db:migrate",
     "start": "node ./dist/index.js",
     "dev": "eslint --fix ./src/ | nodemon --exec sucrase-node ./src/index.js",
     "build": "sucrase ./src -d ./dist --transforms imports ",
     "lint": "eslint --fix ./src/",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --require sucrase/register --timeout 10000"
   },
   "repository": {
     "type": "git",
@@ -24,16 +26,23 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "sucrase": "^3.17.1"
+    "pg": "^8.5.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.5.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "chai": "^4.3.0",
+    "chai-http": "^4.3.0",
     "eslint": "^7.20.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
     "husky": "^5.0.9",
+    "mocha": "^8.3.0",
     "nodemon": "^2.0.7",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "sequelize-cli": "^6.2.0",
+    "sucrase": "^3.17.1"
   }
 }
