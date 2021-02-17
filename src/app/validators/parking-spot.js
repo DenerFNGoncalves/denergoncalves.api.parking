@@ -22,7 +22,7 @@ class ParkingValidator extends BaseValidator {
   }
 
   async errorIfExistsByPlate(plate) {
-    ParkingSpot.findOne({ where: { plate, left: false }, attributes: ['id'] })
+    return ParkingSpot.findOne({ where: { plate, left: false }, attributes: ['id'] })
       .then(exists => {
         return exists
           ? super.newError('The given plate already parking...')

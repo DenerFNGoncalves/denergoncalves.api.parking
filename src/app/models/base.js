@@ -27,7 +27,17 @@ export default class Base extends Model {
    * to other classes inheriting Base
    */
   static definition() {
-    return ({})
+    return ({
+      createdAt: {
+        type: this.types.DATE,
+        defaultValue: () => (new Date())
+      },
+      updatedAt: {
+        type: this.types.DATE,
+        defaultValue: () => (null)
+      }
+
+    })
   }
 
 }

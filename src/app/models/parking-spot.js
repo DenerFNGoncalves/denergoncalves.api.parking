@@ -13,29 +13,32 @@ export default class ParkingSpot extends Base {
       ...common,
       id: {
         primaryKey: true,
+        autoIncrement: true,
+        notNull: true,
         type: this.types.INTEGER
       },
       plate: {
         type: this.types.STRING,
-        required: true
+        notNull: true
       },
       paid: {
         type: this.types.BOOLEAN,
-        required: true,
+        notNull: true,
         defaultValue: false
       },
       left: {
         type: this.types.BOOLEAN,
-        required: true,
+        notNull: true,
         defaultValue: false
       },
       checkIn: {
         type: this.types.DATE,
-        required: true
+        notNull: true,
+        defaultValue: () => (new Date())
       },
       checkOut: {
         type: this.types.DATE,
-        required: true
+        notNull: false
       }
     }
   }

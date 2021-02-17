@@ -29,11 +29,12 @@ module.exports = {
       },
       check_out: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: true
       },
       created_at: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: false,
+        defaultValue: () => (new Date())
       },
       updated_at: {
         type: Sequelize.DATE,
