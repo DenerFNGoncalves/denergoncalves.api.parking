@@ -1,4 +1,4 @@
-import CustomError from "../utils/custom-error";
+import CustomError from "../utils/custom-error"
 
 const ErrorHandler = async (err, req, res, _) => {
   if (err instanceof CustomError)

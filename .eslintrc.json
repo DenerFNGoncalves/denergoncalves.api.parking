@@ -17,8 +17,9 @@
     "rules": {
         "array-element-newline": ["error", { "multiline": true }],
         "no-trailing-spaces": ["warn", { "skipBlankLines": true }],
-        "indent": ["error", 2],
+        "indent": ["error", 2, { "SwitchCase": 1 }],
         "semi": [2, "never"],
+        "no-unused-vars": ["warn", {"args": "after-used"}],
         // allow async-await
         "generator-star-spacing": "off",
         // allow paren-less arrow functions
