@@ -31,7 +31,8 @@ class ParkingTests {
 
   run() {
     this.testPost()
-    this.testPut()
+    this.testCheckout()
+    this.testPayment()
   }
 
   testPost() {
@@ -45,9 +46,9 @@ class ParkingTests {
             const body = res.body
             res.should.have.status(201)
 
-            body.should.include.keys(['success', 'spot'])
+            body.should.include.keys(['success', 'reserved'])
             body.success.should.be.equal(true, "Message should result in success")
-            body.spot.should.be.above(0, "Spot should be greater than 0")
+            body.reserved.should.be.above(0, "Spot should be greater than 0")
             done()
           })
       })
@@ -76,7 +77,7 @@ class ParkingTests {
     })
   }
 
-  testPut() {
+  testCheckout() {
     describe('/PUT/:id/out parking', () => {
       it('it should result on a 404 unknown request', (done) => {
         Chai.request(this.server)
@@ -120,6 +121,58 @@ class ParkingTests {
       it('It should result on 400 error request, since last test already checked it out ', (done) => {
         Chai.request(this.server)
           .put('/api/parking/1/out')
+          .end((err, res) => {
+            res.should.have.status(400)
+            done()
+          })
+      })
+    })
+  }
+  
+  testPayment() {
+    describe('/PUT/:id/pay parking', () => {
+      it('it should result on a 404 unknown request', (done) => {
+        Chai.request(this.server)
+          .put('/api/parking/XX/pay')
+          .end((err, res) => {
+            res.should.have.status(404)
+            done()
+          })
+      })
+
+      it('It should result on a 400 error request, record not found', (done) => {
+        Chai.request(this.server)
+          .put('/api/parking/23/pay')
+          .end((err, res) => {
+            res.should.have.status(400)
+            res.body.should.include.keys(['errors'])
+            done()
+          })
+      })
+
+      it('It should deny request since was already paid', (done) => {
+        Chai.request(this.server)
+          .put('/api/parking/4/pay')
+          .end((err, res) => {
+            res.should.have.status(400)
+            res.body.should.include.keys(['errors'])
+            done()
+          })
+      })
+      
+      it('It should result on success', (done) => {
+        Chai.request(this.server)
+          .put('/api/parking/5/pay')
+          .end((err, res) => {
+            res.should.have.status(200)
+            done()
+          })
+      })
+
+          
+      it('It should result on 400 error request, since last test already paid ', (done) => {
+        Chai.request(this.server)
+          .put('/api/parking/5/pay')
           .end((err, res) => {
             res.should.have.status(400)
             done()
