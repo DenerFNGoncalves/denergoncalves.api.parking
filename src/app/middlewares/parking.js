@@ -7,10 +7,7 @@ export default class ParkingMiddleware {
     const vtor = new ParkingValidator()
 
     vtor.validatePost(body)
-      .then(spot => {
-        req.body = spot
-        next()
-      })
+      .then(() => next())
       .catch((err) => next(err))
   }
 

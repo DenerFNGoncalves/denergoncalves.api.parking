@@ -1,10 +1,14 @@
 import ParkingSpot from "../models/parking-spot"
 
 class ParkingController {
-  async insert(data) {
-    return ParkingSpot.create(data.dataValues, {})
-      .then(spot => spot.id)
-      .catch(err => err)
+
+  async doCheckin(data) {
+   return ParkingSpot.create(data)
+      .then(spot => spot.id) //since it's just a sample, considering spot-id as the reserved spot
+      .catch(err => {
+        return Promise.reject(
+          new Error(`Could not reserve a parking spot. Errs: ${err.message}`))
+      })
   }
 
   async doCheckout(id) {
@@ -27,20 +31,13 @@ class ParkingController {
 }
 
 export default {
-  async post(req, res) {
+  async post(req, res, next) {
     const { body } = req
 
     return new ParkingController()
-      .insert(body)
-      .then(result => {
-        return res.status(201).json({
-          spot: result,
-          success: true
-        })
-      })
-      .catch(err => {
-        return res.status(500).json(err)
-      })
+      .doCheckin(body)
+      .then((reserved) => res.status(200).json({success: true, reserved }))
+      .catch(err => next(err))
   },
 
   async put(req, res, next) {
