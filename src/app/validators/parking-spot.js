@@ -40,7 +40,7 @@ class ParkingValidator extends BaseValidator {
     })
       .then(result => {
         if (!result)
-          return Promise.reject(super.newError("No vehicle found."))
+          return Promise.reject(super.newError("No record found."))
         
         else if(!result.paid)
           return Promise.reject(super.newError("Must be paid before leaving"))
