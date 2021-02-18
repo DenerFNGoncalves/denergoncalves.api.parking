@@ -15,6 +15,7 @@
         "sourceType": "module"
     },
     "rules": {
+        "no-undef": ["error", { "it": false, "describe": false}],
         "array-element-newline": ["error", { "multiline": true }],
         "no-trailing-spaces": ["warn", { "skipBlankLines": true }],
         "indent": ["error", 2, { "SwitchCase": 1 }],
