@@ -21,7 +21,7 @@ class ParkingValidator extends BaseValidator {
       : Promise.resolve(spot)
   }
 
-  async validatePut(id) {
+  async validatePutCheckout(id) {
     if (!id)
       return Promise.reject(super.newError("Invalid request"))
 
@@ -32,6 +32,35 @@ class ParkingValidator extends BaseValidator {
       : Promise.resolve()
   }
 
+  // since model was designed without need of paid value
+  // this method only tests id, otherwise the value could be validated here
+  async validatePutPayment(id) {
+    if (!id)
+      return Promise.reject(super.newError("Invalid request"))
+
+    const err =  await this.errorIfJustPaidOrNotExist(id)
+   
+    return err
+      ? Promise.reject(err)
+      : Promise.resolve()
+  }
+
+  async errorIfJustPaidOrNotExist(id) {
+    return ParkingSpot.findOne({
+      where: { id, left: false },
+      attributes: ['id', 'paid']
+    })
+      .then(result => {
+        if (!result)
+          return Promise.reject(super.newError("No record found."))
+        
+        else if(result.paid) // the diff from errorIfNotPaid
+          return Promise.reject(super.newError("This reserve was already paid"))
+      
+        return false
+      })
+      .catch(e => e)
+  }
 
   async errorIfNotPaidOrNotExist(id) {
     return ParkingSpot.findOne({

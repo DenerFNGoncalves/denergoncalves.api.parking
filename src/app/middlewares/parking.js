@@ -11,11 +11,20 @@ export default class ParkingMiddleware {
       .catch((err) => next(err))
   }
 
-  static async beforePut(req, _, next) {
+  static async beforePutCheckout(req, _, next) {
     const { id = 0} = req.params || {}
     const vtor = new ParkingValidator()
 
-    vtor.validatePut(id)
+    vtor.validatePutCheckout(id)
+      .then(() => next())
+      .catch((err) => next(err))
+  }
+  
+  static async beforePutPayment(req, _, next) {
+    const { id = 0} = req.params || {}
+    const vtor = new ParkingValidator()
+
+    vtor.validatePutPayment(id)
       .then(() => next())
       .catch((err) => next(err))
   }
