@@ -1,6 +1,8 @@
 import CustomError from "../utils/custom-error"
 
+// eslint-disable-next-line no-unused-vars
 const ErrorHandler = async (err, req, res, _) => {
+
   if (err instanceof CustomError)
     return res.status(err.code).json(err)
 
