@@ -56,7 +56,7 @@ export default {
 
     return new ParkingController()
       .doCheckin(body)
-      .then((reserved) => res.status(200).json({success: true, reserved }))
+      .then((reserved) => res.status(201).json({success: true, reserved }))
       .catch(err => next(err))
   },
 
