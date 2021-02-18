@@ -1,12 +1,14 @@
 import Sequelize from 'sequelize'
 import { loadModules } from '../app/utils/modules-loader'
 import Path from 'path'
+import Logger from './logger'
 
 export default class DbContext {
   constructor({ database, username, password, dialect, host }) {
     this.__connection = new Sequelize(database, username, password, {
       host: host,
-      dialect: dialect
+      dialect: dialect,
+      logging: (msg) => Logger.info(msg)
     })
 
     this.__init()

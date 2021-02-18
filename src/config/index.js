@@ -3,6 +3,7 @@ import Express from 'express'
 import Cors from 'cors'
 import Path from 'path'
 import DbContext from './dbcontext'
+import Logger from './logger'
 
 class Server {
   constructor() {
@@ -28,7 +29,7 @@ class Server {
 
   start() {
     this._app.listen(config.server.port, () => {
-      console.log("server running")
+      Logger.info(" ======= SERVER RUNING ======= \n")
     })
   }
 
