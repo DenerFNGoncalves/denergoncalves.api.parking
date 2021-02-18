@@ -1,4 +1,3 @@
-
 import ParkingValidator from '../validators/parking-spot'
 
 export default class ParkingMiddleware {
@@ -12,6 +11,15 @@ export default class ParkingMiddleware {
         req.body = spot
         next()
       })
+      .catch((err) => next(err))
+  }
+
+  static async beforePut(req, _, next) {
+    const { id = 0} = req.params || {}
+    const vtor = new ParkingValidator()
+
+    vtor.validatePut(id)
+      .then(() => next())
       .catch((err) => next(err))
   }
 }
