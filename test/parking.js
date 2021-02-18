@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 process.env.NODE_ENV='test'
 
 import App from "../src/app"
@@ -33,6 +34,7 @@ class ParkingTests {
     this.testPost()
     this.testCheckout()
     this.testPayment()
+    this.testHistory()
   }
 
   testPost() {
@@ -142,7 +144,7 @@ class ParkingTests {
 
       it('It should result on a 400 error request, record not found', (done) => {
         Chai.request(this.server)
-          .put('/api/parking/23/pay')
+          .put('/api/parking/7579/pay')
           .end((err, res) => {
             res.should.have.status(400)
             res.body.should.include.keys(['errors'])
@@ -175,6 +177,50 @@ class ParkingTests {
           .put('/api/parking/5/pay')
           .end((err, res) => {
             res.should.have.status(400)
+            done()
+          })
+      })
+    })
+  }
+  
+  testHistory() {
+    describe('/GET/:plate parking', () => {
+      it('it should result on a 404 unknown request, since "AR4-342D is not in plate format', (done) => {
+        Chai.request(this.server)
+          .get('/api/parking/AR4-342D')
+          .end((err, res) => {
+            res.should.have.status(404)
+            done()
+          })
+      })
+
+      it('It should result on a 400 error request, since LAB-1111 is not recorded', (done) => {
+        Chai.request(this.server)
+          .get('/api/parking/LAB-1111')
+          .end((err, res) => {
+            res.should.have.status(400)
+            res.body.should.include.keys(['errors'])
+            done()
+          })
+      })
+      
+      it('It should result on success, with all items on a interval', (done) => {
+        Chai.request(this.server)
+          .get('/api/parking/FUR-2000')
+          .end((err, res) => {
+            res.should.have.status(200)
+            res.body.should.include.keys(['result'])
+            done()
+          })
+      })
+
+          
+      it('It should result on success, with a item with time still going on', (done) => {
+        Chai.request(this.server)
+          .get('/api/parking/DBA-5432')
+          .end((err, res) => {
+            res.should.have.status(200)
+            res.body.should.include.keys(['result'])
             done()
           })
       })
