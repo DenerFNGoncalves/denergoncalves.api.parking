@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = {
   up: async (iqry) => {
@@ -28,6 +28,6 @@ module.exports = {
     
     return iqry.bulkDelete('parking_spot', null, {
       where: { "id": { [Sequelize.Op.between]: [4, 5] } }
-    }) 
+    })
   }
-};
+}

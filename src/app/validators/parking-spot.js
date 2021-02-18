@@ -45,6 +45,28 @@ class ParkingValidator extends BaseValidator {
       : Promise.resolve()
   }
 
+  async validateGet(plate) {
+    if (!plate || plate === '')
+      return Promise.reject(super.newError("Invalid request"))
+
+    const err = this.validateMask(plate) || await this.errorIfNotExistByPlate(plate)
+   
+    return err
+      ? Promise.reject(err)
+      : Promise.resolve()
+  }
+
+  async errorIfNotExistByPlate(plate) {
+    return ParkingSpot.findOne({ where: { plate }, attributes: ['id'] })
+      .then(exists => {
+        return !exists
+          ? super.newError('Vehicle not found to the given plate')
+          : false
+      })
+      .catch(err => err)
+  }
+
+
   async errorIfJustPaidOrNotExist(id) {
     return ParkingSpot.findOne({
       where: { id, left: false },

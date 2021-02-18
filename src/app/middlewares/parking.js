@@ -28,4 +28,13 @@ export default class ParkingMiddleware {
       .then(() => next())
       .catch((err) => next(err))
   }
+
+  static async beforeGet(req, _, next) {
+    const { plate } = req.params || {}
+
+    const vtor = new ParkingValidator()
+    vtor.validateGet(plate)
+      .then(() => next())
+      .catch((err) => next(err))
+  }
 }

@@ -29,4 +29,6 @@ export const loadModules = (path = '.', blacklist = []) => {
     })
 }
 
-export default {}
+export default {
+  loadModules
+}
