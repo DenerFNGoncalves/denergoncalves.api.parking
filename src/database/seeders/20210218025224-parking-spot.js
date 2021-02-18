@@ -33,9 +33,7 @@ module.exports = {
     ])
   },
 
-  down: async (iqry, Sequelize) => {
-    return iqry.bulkDelete('parking_spot', null, {
-      where: { "id": { [Sequelize.Op.between]: [1, 3] } }
-    })
+  down: async (iqry) => {
+    return iqry.bulkDelete('parking_spot', null, {})
   }
 }
