@@ -1,6 +1,6 @@
- class Logger {
+class Logger {
   constructor() {
-    // the idea for this class it centralize logger config 
+    // the idea for this class it centralize logger config
     // where and how to print it
     // on this sample project, it simply used console.log
   }
@@ -9,11 +9,12 @@
     console.log(`[${new Date().toLocaleString()}] INFO ${data}`)
   }
 
-  error(data) {    
+  
+  error(data) {
     console.log(`[${new Date().toLocaleString()}] ERROR ${data}`)
   }
 
-  warn(data) {    
+  warn(data) {
     console.log(`[${new Date().toLocaleString()}] WARN ${data}`)
   }
 }

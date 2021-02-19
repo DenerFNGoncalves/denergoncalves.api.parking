@@ -1,10 +1,13 @@
 FROM node:14.15.4
+
 WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install --silent
 
-EXPOSE 3037
+ADD . ./
 
-CMD ["npm", "start"]
+RUN npm run build
+
+CMD npm start

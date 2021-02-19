@@ -1,0 +1,27 @@
+version: "3.0"
+services:
+  db:
+    env_file: .env
+    image: postgres:12-alpine
+    container_name: parking-db
+    environment:
+      POSTGRES_USER: $DB_USER
+      POSTGRES_PASSWORD: $DB_PWD
+      POSTGRES_DB: $DB_NAME
+    ports:
+        - 5432:5432
+
+  api:
+    image: node:12
+    container_name: parking-api
+    command: npm run dev
+    volumes:
+      - $PWD:/app
+    working_dir: /app
+    ports:
+      - 3037:3037
+    env_file: .env
+    links:
+      - db
+    depends_on:
+      - db
