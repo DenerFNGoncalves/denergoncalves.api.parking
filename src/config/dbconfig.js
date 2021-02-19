@@ -4,7 +4,7 @@ module.exports = {
     password: process.env.DB_PWD || "postgres",
     database: process.env.DB_NAME || "parking_dev",
     host: process.env.DB_HOST || "localhost",
-    port: process.env.DB_PORT || 5432,
+    port: process.env.DB_PORT || "5432",
     dialect: process.env.DB_DIALECT || "postgres",
     dialectOptions: {
       bigNumberStrings: true
@@ -15,7 +15,7 @@ module.exports = {
     password: process.env.DB_PWD || "postgres",
     database: process.env.DB_NAME || "parking_test",
     host: process.env.DB_HOST || "localhost",
-    port: process.env.DB_PORT || 5432,
+    port: process.env.DB_PORT || "5432",
     dialect: process.env.DB_DIALECT || "postgres",
     dialectOptions: {
       bigNumberStrings: true

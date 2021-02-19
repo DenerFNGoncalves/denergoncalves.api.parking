@@ -11,7 +11,6 @@
     "start": "node ./dist/index.js",
     "dev": "nodemon --exec sucrase-node ./src/index.js",
     "build": "sucrase ./src -d ./dist --transforms imports ",
-    "prebuild": "eslint --fix ./src/",
     "lint": "eslint --fix ./src/",
     "pretest": "npm run db-undoseed && npm run db-seedall",
     "test": "mocha --require sucrase/register --timeout 10000"

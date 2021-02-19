@@ -9,6 +9,7 @@ class Logger {
     console.log(`[${new Date().toLocaleString()}] INFO ${data}`)
   }
 
+  
   error(data) {
     console.log(`[${new Date().toLocaleString()}] ERROR ${data}`)
   }
