@@ -3,8 +3,10 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install --silent
 
-EXPOSE 3037
+ADD . /src
 
-CMD ["npm", "start"]
+RUN npm run build
+
+CMD npm start

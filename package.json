@@ -10,9 +10,11 @@
     "db-undoseed": "sequelize-cli db:seed:undo:all",
     "start": "node ./dist/index.js",
     "dev": "nodemon --exec sucrase-node ./src/index.js",
-    "build": "eslint --fix ./src/ && sucrase ./src -d ./dist --transforms imports ",
+    "build": "sucrase ./src -d ./dist --transforms imports ",
+    "prebuild": "eslint --fix ./src/",
     "lint": "eslint --fix ./src/",
-    "test": "npm run db-undoseed && npm run db-seedall && mocha --require sucrase/register --timeout 10000"
+    "pretest": "npm run db-undoseed && npm run db-seedall",
+    "test": "mocha --require sucrase/register --timeout 10000"
   },
   "repository": {
     "type": "git",
@@ -40,7 +42,6 @@
     "eslint": "^7.20.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
-    "husky": "^5.0.9",
     "mocha": "^8.3.0",
     "nodemon": "^2.0.7",
     "prettier": "^2.2.1",
