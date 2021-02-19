@@ -79,7 +79,7 @@ If you plan to use docker to run the application you can just run `docker-compos
 ```
   docker build -t parking-api .
  ```
-Image done. Before running it, follow the steps to run database inside docker too (if you plan to, otherwise you can skip).
+Image done. Before running it, follow the steps to run database inside docker too (if you plan to, otherwise you can skip it).
 
 ```sh
 docker run \
