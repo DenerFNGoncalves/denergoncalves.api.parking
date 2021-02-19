@@ -1,7 +1,8 @@
-import path from 'path'
+import Routes from './routes'
 
 export default {
-    use: (server) => {
-       //TODO
-    }
+  use: (server) => {
+    Routes.use({ server })
+    return server
+  }
 }
