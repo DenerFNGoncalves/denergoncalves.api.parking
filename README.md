@@ -92,10 +92,10 @@ docker run \
 ```
 
 Running parking-api: Here we got some caveats before proceeding: 
-* - 1) If you are running with postgres from a container the run command should contain `--link postgres` 
-* - 2) If you plan to run as dev-mode, your .env file must have the same values passed on the command run. 
-* - 3) If you gonna use database local, you might get some permission block depending your SO and Docker version. So you need to set DB_HOST properly. [This probably helps](https://stackoverflow.com/questions/24319662/from-inside-of-a-docker-container-how-do-i-connect-to-the-localhost-of-the-mach)
-* - 4) Before executing remember to use database scripts - `db-create and db-migration` 
+* 1) If you are running with postgres from a container the run command should contain `--link postgres` 
+* 2) If you plan to run as dev-mode, your .env file must have the same values passed on the command run. 
+* 3) If you gonna use database local, you might get some permission block depending your SO and Docker version. So you need to set DB_HOST properly. [This probably helps](https://stackoverflow.com/questions/24319662/from-inside-of-a-docker-container-how-do-i-connect-to-the-localhost-of-the-mach)
+* 4) Before executing remember to use database scripts - `db-create and db-migration` 
 
 Samples:
 ```sh
